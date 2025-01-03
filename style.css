@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  background-color: #1e1e1e;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.scoreBoard {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 20px;
+  z-index: 10;
+}
+
+.controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 10;
+}
+
+.controls h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.controls select, .controls button {
+  margin: 5px 0;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.controls select {
+  width: 100%;
+}
+
+.controls button:hover {
+  background-color: #555;
+}
+
+.myGame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #1e1e1e;
+}
+
+.gameover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 50px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 20;
+}
+
+.gameover button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.gameover button:hover {
+  background-color: #555;
+}
+
+.gameover div {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
