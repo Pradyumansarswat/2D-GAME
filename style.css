@@ -82,21 +82,21 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #c037db;
   color: white;
   animation: pulse 2s infinite;
 }
 
 .mobile-controls .healthPack {
-  background-color: #28a745;
+  background-color: #2f7be5;
 }
 
 .mobile-controls button:hover, .mobile-controls .healthPack:hover {
-  background-color: #0056b3;
+  background-color: #0c4684;
 }
 
 .mobile-controls .healthPack:hover {
-  background-color: #218838;
+  background-color: #be459e;
 }
 
 .myGame {
@@ -116,11 +116,7 @@ canvas {
   to { opacity: 1; }
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
+
 
 .controls.hidden {
   display: none;
