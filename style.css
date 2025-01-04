@@ -1,61 +1,102 @@
-body {
+body, html {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
   background-color: #1e1e1e;
   color: white;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
 
-.scoreBoard {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 10px 20px;
+h2 {
+  margin: 0;
+  padding: 10px;
+}
+
+.scoreBoard{
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
   border-radius: 5px;
-  font-size: 20px;
   z-index: 10;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.healthBoard {
+  top: 50px;
+}
+
+.livesBoard {
+  top: 90px;
 }
 
 .controls {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 5px;
-  text-align: center;
   z-index: 10;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .controls h2 {
-  margin: 0 0 10px;
-  font-size: 18px;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .controls select, .controls button {
-  margin: 5px 0;
-  padding: 10px 15px;
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
   cursor: pointer;
 }
 
-.controls select {
-  width: 100%;
+.mobile-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+  animation: fadeIn 1s ease-in-out;
 }
 
-.controls button:hover {
-  background-color: #555;
+.mobile-controls button, .mobile-controls .healthPack {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.mobile-controls .healthPack {
+  background-color: #28a745;
+}
+
+.mobile-controls button:hover, .mobile-controls .healthPack:hover {
+  background-color: #0056b3;
+}
+
+.mobile-controls .healthPack:hover {
+  background-color: #218838;
 }
 
 .myGame {
@@ -63,10 +104,30 @@ body {
   width: 100%;
   height: 100%;
   background-color: #1e1e1e;
+  animation: fadeIn 1s ease-in-out;
+}
+
+canvas {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.controls.hidden {
+  display: none;
 }
 
 .gameover {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -75,28 +136,20 @@ body {
   border-radius: 10px;
   text-align: center;
   z-index: 20;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .gameover button {
   margin-top: 20px;
   padding: 10px 20px;
+  font-size: 18px;
   border: none;
   border-radius: 5px;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
   cursor: pointer;
+  background-color: #007bff;
+  color: white;
 }
 
 .gameover button:hover {
-  background-color: #555;
-}
-
-.gameover div {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.hidden {
-  display: none;
+  background-color: #0056b3;
 }
