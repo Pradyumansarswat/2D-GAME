@@ -12,8 +12,8 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 const context = canvas.getContext("2d");
 
-const lightWeaponDamage = 10;
-const heavyWeaponDamage = 20;
+const lightWeaponDamage = 20;
+const heavyWeaponDamage = 40;
 let difficulty = 2;
 let playerScore = 0;
 
@@ -354,15 +354,15 @@ function startGame() {
   switch (userValue) {
     case "Easy":
       setInterval(spawnEnemy, 2000);
-      difficulty = 5;
+      difficulty = 3;
       break;
     case "Medium":
       setInterval(spawnEnemy, 1400);
-      difficulty = 8;
+      difficulty = 5;
       break;
     case "Hard":
       setInterval(spawnEnemy, 1000);
-      difficulty = 10;
+      difficulty = 8;
       break;
     case "Insane":
       setInterval(spawnEnemy, 700);
