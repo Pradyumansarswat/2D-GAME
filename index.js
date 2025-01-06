@@ -12,8 +12,8 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 const context = canvas.getContext("2d");
 
-const lightWeaponDamage = 20;
-const heavyWeaponDamage = 40;
+const lightWeaponDamage = 10;
+const heavyWeaponDamage = 30;
 const HUGE_WEAPON_COST = 50;
 let difficulty = 1;
 let playerScore = 0;
@@ -78,7 +78,7 @@ class HugeWeapon {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.color = "rgb(0, 255, 106)";
+        this.color = "rgb(21, 152, 228)";
     }
 
     draw() {
@@ -179,28 +179,28 @@ canvas.addEventListener('touchstart', (e) => {
     if (gamePaused) return;
 
     const touch = e.touches[0];
+    if (e.touches.length === 1) {
+       
+        attackWithLightWeapon(touch.clientX, touch.clientY);
+    } else if (e.touches.length === 2) {
+      
+        attackWithHeavyWeapon(touch.clientX, touch.clientY);
+    }
+});
+
+canvas.addEventListener("click", (e) => {
+    if (gamePaused) return;
     shootingSound.play();
+    attackWithLightWeapon(e.clientX, e.clientY);
+});
 
-    const angle = Math.atan2(
-        touch.clientY - canvas.height / 2,
-        touch.clientX - canvas.width / 2
-    );
-
-    const velocity = {
-        x: Math.cos(angle) * 6,
-        y: Math.sin(angle) * 6,
-    };
-
-    weapons.push(
-        new Weapon(
-            canvas.width / 2,
-            canvas.height / 2,
-            6,
-            "white",
-            velocity,
-            lightWeaponDamage
-        )
-    );
+canvas.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    if (playerScore <= 0 || gamePaused) return;
+    heavyWeaponSound.play();
+    playerScore -= 2;
+    scoreBoard.innerHTML = `Score: ${playerScore}`;
+    attackWithHeavyWeapon(e.clientX, e.clientY);
 });
 
 addEventListener("keypress", (e) => {
@@ -239,15 +239,15 @@ function startGame() {
             difficulty = 3;
             break;
         case "Medium":
-            setInterval(spawnEnemy, 1400);
+            setInterval(spawnEnemy, 1800);
             difficulty = 5;
             break;
         case "Hard":
-            setInterval(spawnEnemy, 1000);
+            setInterval(spawnEnemy, 1400);
             difficulty = 8;
             break;
         case "Insane":
-            setInterval(spawnEnemy, 700);
+            setInterval(spawnEnemy, 1000);
             difficulty = 12;
             break;
     }
@@ -386,6 +386,53 @@ function animation() {
     }
 }
 
+function attackWithLightWeapon(clientX, clientY) {
+    shootingSound.play();
+    const angle = Math.atan2(
+        clientY - canvas.height / 2,
+        clientX - canvas.width / 2
+    );
+    const velocity = {
+        x: Math.cos(angle) * 6,
+        y: Math.sin(angle) * 6,
+    };
+    weapons.push(
+        new Weapon(
+            canvas.width / 2,
+            canvas.height / 2,
+            6,
+            "white",
+            velocity,
+            lightWeaponDamage
+        )
+    );
+}
+
+function attackWithHeavyWeapon(clientX, clientY) {
+    if (playerScore <= 0 || gamePaused) return;
+    heavyWeaponSound.play();
+    playerScore -= 8;
+    scoreBoard.innerHTML = `Score: ${playerScore}`;
+    const angle = Math.atan2(
+        clientY - canvas.height / 2,
+        clientX - canvas.width / 2
+    );
+    const velocity = {
+        x: Math.cos(angle) * 3,
+        y: Math.sin(angle) * 3,
+    };
+    weapons.push(
+        new Weapon(
+            canvas.width / 2,
+            canvas.height / 2,
+            30,
+            "cyan",
+            velocity,
+            heavyWeaponDamage
+        )
+    );
+}
+
 const gameOverLoader = () => {
     const gameOverBanner = document.createElement("div");
     const gameOverBtn = document.createElement("button");
@@ -425,54 +472,6 @@ const gameOverLoader = () => {
 
 startGameBtn.addEventListener("click", startGame);
 restartGameBtn.addEventListener("click", () => window.location.reload());
-
-canvas.addEventListener("click", (e) => {
-    shootingSound.play();
-    const angle = Math.atan2(
-        e.clientY - canvas.height / 2,
-        e.clientX - canvas.width / 2
-    );
-    const velocity = {
-        x: Math.cos(angle) * 6,
-        y: Math.sin(angle) * 6,
-    };
-    weapons.push(
-        new Weapon(
-            canvas.width / 2,
-            canvas.height / 2,
-            6,
-            "white",
-            velocity,
-            lightWeaponDamage
-        )
-    );
-});
-
-canvas.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-    if (playerScore <= 0) return;
-    heavyWeaponSound.play();
-    playerScore -= 2;
-    scoreBoard.innerHTML = `Score: ${playerScore}`;
-    const angle = Math.atan2(
-        e.clientY - canvas.height / 2,
-        e.clientX - canvas.width / 2
-    );
-    const velocity = {
-        x: Math.cos(angle) * 3,
-        y: Math.sin(angle) * 3,
-    };
-    weapons.push(
-        new Weapon(
-            canvas.width / 2,
-            canvas.height / 2,
-            30,
-            "cyan",
-            velocity,
-            heavyWeaponDamage
-        )
-    );
-});
 
 addEventListener("contextmenu", (e) => {
     e.preventDefault();
