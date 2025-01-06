@@ -178,12 +178,11 @@ canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
     if (gamePaused) return;
 
-    const touch = e.touches[0];
     if (e.touches.length === 1) {
-       
+        const touch = e.touches[0];
         attackWithLightWeapon(touch.clientX, touch.clientY);
     } else if (e.touches.length === 2) {
-      
+        const touch = e.touches[0];
         attackWithHeavyWeapon(touch.clientX, touch.clientY);
     }
 });
@@ -414,8 +413,8 @@ function attackWithHeavyWeapon(clientX, clientY) {
     playerScore -= 8;
     scoreBoard.innerHTML = `Score: ${playerScore}`;
     const angle = Math.atan2(
-        clientY - canvas.height / 2,
-        clientX - canvas.width / 2
+        clientY - player.y,
+        clientX - player.x
     );
     const velocity = {
         x: Math.cos(angle) * 3,
@@ -423,8 +422,8 @@ function attackWithHeavyWeapon(clientX, clientY) {
     };
     weapons.push(
         new Weapon(
-            canvas.width / 2,
-            canvas.height / 2,
+            player.x,
+            player.y,
             30,
             "cyan",
             velocity,
