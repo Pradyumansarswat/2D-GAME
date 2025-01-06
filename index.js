@@ -22,6 +22,7 @@ let gamePaused = false;
 
 const scoreBoard = document.querySelector(".scoreBoard");
 const difficultySelect = document.getElementById("difficulty");
+const difficultyLevel = document.getElementById("difficultyLevel");
 const startGameBtn = document.getElementById("startGame");
 const restartGameBtn = document.getElementById("restartGame");
 const controls = document.querySelector(".controls");
@@ -167,7 +168,7 @@ function updateControlsVisibility() {
 hugeWeaponBtn.addEventListener('click', () => {
     if (playerScore >= HUGE_WEAPON_COST && !gamePaused) {
         playerScore -= HUGE_WEAPON_COST;
-        scoreBoard.innerHTML = `Score: ${playerScore}`;
+        scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
         hugeWeaponSound.play();
         hugeWeapons.push(new HugeWeapon(0, 0));
     }
@@ -206,7 +207,7 @@ addEventListener("keypress", (e) => {
     if (e.key === " ") {
         if (gamePaused || playerScore < HUGE_WEAPON_COST) return;
         playerScore -= HUGE_WEAPON_COST;
-        scoreBoard.innerHTML = `Score: ${playerScore}`;
+        scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
         hugeWeaponSound.play();
         hugeWeapons.push(new HugeWeapon(0, 0));
     }
@@ -230,6 +231,7 @@ function startGame() {
     controls.classList.add("hidden");
 
     const userValue = difficultySelect.value;
+    difficultyLevel.textContent = userValue;
 
     switch (userValue) {
         case "Easy":
@@ -254,15 +256,15 @@ function startGame() {
     animation();
 }
 
-document.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-}, { passive: false });
+// document.addEventListener('touchmove', (e) => {
+//     e.preventDefault();
+// }, { passive: false });
 
-document.addEventListener('touchstart', (e) => {
-    if (e.target.tagName !== 'BUTTON') {
-        e.preventDefault();
-    }
-}, { passive: false });
+// document.addEventListener('touchstart', (e) => {
+//     if (e.target.tagName !== 'BUTTON') {
+//         e.preventDefault();
+//     }
+// }, { passive: false });
 
 const spawnEnemy = () => {
     const enemySize = Math.random() * (40 - 5) + 5;
@@ -299,7 +301,7 @@ let animationId;
 function animation() {
     if (gamePaused) return;
     animationId = requestAnimationFrame(animation);
-    scoreBoard.innerHTML = `Score : ${playerScore}`;
+    scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
     context.fillStyle = "rgba(49, 49, 49,0.2)";
     context.fillRect(0, 0, canvas.width, canvas.height);
     player.draw();
@@ -339,7 +341,6 @@ function animation() {
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
 
         if (dist - player.radius - enemy.radius < 1) {
-    
             cancelAnimationFrame(animationId);
             gameOverSound.play();
             return gameOverLoader();
@@ -378,7 +379,7 @@ function animation() {
                         );
                     }
                     playerScore += 10;
-                    scoreBoard.innerHTML = `Score : ${playerScore}`;
+                    scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
                     setTimeout(() => {
                         enemies.splice(enemyIndex, 1);
                         weapons.splice(weaponIndex, 1);
@@ -399,12 +400,20 @@ const gameOverLoader = () => {
     const gameOverBanner = document.createElement("div");
     const gameOverBtn = document.createElement("button");
     const highScore = document.createElement("div");
+    const finalScore = document.createElement("div");
+    const finalDifficulty = document.createElement("div");
 
-    highScore.innerHTML = `High Score : ${
-        localStorage.getItem("highScore")
-            ? localStorage.getItem("highScore")
-            : playerScore
-    }`;
+
+    finalScore.innerHTML = `Final Score: ${playerScore}`;
+
+
+    finalDifficulty.innerHTML = `Level: ${difficultyLevel.textContent}`;
+
+
+    highScore.innerHTML = `High Score: ${localStorage.getItem("highScore")
+        ? localStorage.getItem("highScore")
+        : playerScore
+        }`;
 
     const oldHighScore =
         localStorage.getItem("highScore") && localStorage.getItem("highScore");
@@ -415,6 +424,8 @@ const gameOverLoader = () => {
     }
 
     gameOverBtn.innerText = "Play Again";
+    gameOverBanner.appendChild(finalScore);
+    gameOverBanner.appendChild(finalDifficulty);
     gameOverBanner.appendChild(highScore);
     gameOverBanner.appendChild(gameOverBtn);
 
@@ -456,7 +467,7 @@ canvas.addEventListener("contextmenu", (e) => {
     if (playerScore <= 0) return;
     heavyWeaponSound.play();
     playerScore -= 2;
-    scoreBoard.innerHTML = `Score : ${playerScore}`;
+    scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
     const angle = Math.atan2(
         e.clientY - canvas.height / 2,
         e.clientX - canvas.width / 2

@@ -5,7 +5,7 @@ body, html {
   height: 100%;
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
-  background-color: #1e1e1e;
+  background-color: #121212;
   color: white;
   display: flex;
   flex-direction: column;
@@ -18,37 +18,31 @@ h2 {
   padding: 10px;
 }
 
-.scoreBoard{
+.scoreBoard {
   position: fixed;
   top: 10px;
   left: 10px;
   font-size: 24px;
   font-weight: 700;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 10px;
   z-index: 10;
   animation: fadeIn 1s ease-in-out;
-}
-
-.healthBoard {
-  top: 50px;
-}
-
-.livesBoard {
-  top: 90px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .controls {
   position: fixed;
   top: 10px;
   right: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   z-index: 10;
   text-align: center;
   animation: fadeIn 1s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .controls h2 {
@@ -63,6 +57,13 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  background-color: #2f7be5;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.controls select:hover, .controls button:hover {
+  background-color: #1a5bbf;
 }
 
 .mobile-controls {
@@ -76,7 +77,7 @@ h2 {
   animation: fadeIn 1s ease-in-out;
 }
 
-.mobile-controls button, .mobile-controls .healthPack {
+.mobile-controls button {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
@@ -85,18 +86,11 @@ h2 {
   background-color: #c037db;
   color: white;
   animation: pulse 2s infinite;
+  transition: background-color 0.3s;
 }
 
-.mobile-controls .healthPack {
-  background-color: #2f7be5;
-}
-
-.mobile-controls button:hover, .mobile-controls .healthPack:hover {
-  background-color: #0c4684;
-}
-
-.mobile-controls .healthPack:hover {
-  background-color: #be459e;
+.mobile-controls button:hover {
+  background-color: #8e2ba8;
 }
 
 .myGame {
@@ -116,7 +110,10 @@ canvas {
   to { opacity: 1; }
 }
 
-
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
 
 .controls.hidden {
   display: none;
@@ -133,6 +130,7 @@ canvas {
   text-align: center;
   z-index: 20;
   animation: fadeIn 1s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .gameover button {
@@ -144,6 +142,7 @@ canvas {
   cursor: pointer;
   background-color: #007bff;
   color: white;
+  transition: background-color 0.3s;
 }
 
 .gameover button:hover {
