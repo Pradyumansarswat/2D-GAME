@@ -168,7 +168,7 @@ function updateControlsVisibility() {
 hugeWeaponBtn.addEventListener('click', () => {
     if (playerScore >= HUGE_WEAPON_COST && !gamePaused) {
         playerScore -= HUGE_WEAPON_COST;
-        scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
+        scoreBoard.innerHTML = `Score: ${playerScore}`;
         hugeWeaponSound.play();
         hugeWeapons.push(new HugeWeapon(0, 0));
     }
@@ -207,7 +207,7 @@ addEventListener("keypress", (e) => {
     if (e.key === " ") {
         if (gamePaused || playerScore < HUGE_WEAPON_COST) return;
         playerScore -= HUGE_WEAPON_COST;
-        scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
+        scoreBoard.innerHTML = `Score: ${playerScore}`;
         hugeWeaponSound.play();
         hugeWeapons.push(new HugeWeapon(0, 0));
     }
@@ -256,16 +256,6 @@ function startGame() {
     animation();
 }
 
-// document.addEventListener('touchmove', (e) => {
-//     e.preventDefault();
-// }, { passive: false });
-
-// document.addEventListener('touchstart', (e) => {
-//     if (e.target.tagName !== 'BUTTON') {
-//         e.preventDefault();
-//     }
-// }, { passive: false });
-
 const spawnEnemy = () => {
     const enemySize = Math.random() * (40 - 5) + 5;
     const enemyColor = `hsl(${Math.floor(Math.random() * 360)},100%,50%)`;
@@ -301,7 +291,7 @@ let animationId;
 function animation() {
     if (gamePaused) return;
     animationId = requestAnimationFrame(animation);
-    scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
+    scoreBoard.innerHTML = `Score: ${playerScore}`;
     context.fillStyle = "rgba(49, 49, 49,0.2)";
     context.fillRect(0, 0, canvas.width, canvas.height);
     player.draw();
@@ -379,7 +369,7 @@ function animation() {
                         );
                     }
                     playerScore += 10;
-                    scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
+                    scoreBoard.innerHTML = `Score: ${playerScore}`;
                     setTimeout(() => {
                         enemies.splice(enemyIndex, 1);
                         weapons.splice(weaponIndex, 1);
@@ -403,17 +393,13 @@ const gameOverLoader = () => {
     const finalScore = document.createElement("div");
     const finalDifficulty = document.createElement("div");
 
-
     finalScore.innerHTML = `Final Score: ${playerScore}`;
-
-
     finalDifficulty.innerHTML = `Level: ${difficultyLevel.textContent}`;
-
 
     highScore.innerHTML = `High Score: ${localStorage.getItem("highScore")
         ? localStorage.getItem("highScore")
         : playerScore
-        }`;
+    }`;
 
     const oldHighScore =
         localStorage.getItem("highScore") && localStorage.getItem("highScore");
@@ -467,7 +453,7 @@ canvas.addEventListener("contextmenu", (e) => {
     if (playerScore <= 0) return;
     heavyWeaponSound.play();
     playerScore -= 2;
-    scoreBoard.innerHTML = `Score: ${playerScore} | Difficulty: ${difficultyLevel.textContent}`;
+    scoreBoard.innerHTML = `Score: ${playerScore}`;
     const angle = Math.atan2(
         e.clientY - canvas.height / 2,
         e.clientX - canvas.width / 2
